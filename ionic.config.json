@@ -1,0 +1,7 @@
+{
+  "name": "login-registration",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
