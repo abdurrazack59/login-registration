@@ -14,18 +14,18 @@ export class LandingPage implements OnInit {
     private menu: MenuController,
     private authService: AuthService,
     private navCtrl: NavController,
-  ) { 
+  ) {
     this.menu.enable(false);
   }
   ionViewWillEnter() {
     this.authService.getToken().then(() => {
-      if(this.authService.isLoggedIn) {
+      if (this.authService.isLoggedIn) {
         this.navCtrl.navigateRoot('/dashboard');
       }
     });
   }
   ngOnInit() {
-    
+
   }
   async register() {
     const registerModal = await this.modalController.create({

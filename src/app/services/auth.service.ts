@@ -11,7 +11,7 @@ import { User } from '../models/user';
 
 export class AuthService {
   isLoggedIn = false;
-  token:any;
+  token: any;
 
   constructor(
     private http: HttpClient,
@@ -19,9 +19,10 @@ export class AuthService {
     private env: EnvService,
   ) { }
 
+  // tslint:disable-next-line: ban-types
   login(username: String, password: String) {
     return this.http.post(this.env.API_URL + 'token/generate-token',
-      {username: username, password: password}
+      {username, password}
     ).pipe(
       tap(token => {
         this.storage.setItem('token', token)
@@ -38,34 +39,35 @@ export class AuthService {
     );
   }
 
+  // tslint:disable-next-line: ban-types
   register(fName: String, lName: String, email: String, password: String) {
     return this.http.post(this.env.API_URL + 'auth/register',
-      {fName: fName, lName: lName, email: email, password: password}
-    )
+      {fName, lName, email, password}
+    );
   }
 
   logout() {
     const headers = new HttpHeaders({
-      'Authorization': this.token["token_type"]+" "+this.token["access_token"]
+      Authorization: this.token.token_type + ' ' + this.token.access_token
     });
 
-    return this.http.get(this.env.API_URL + 'auth/logout', { headers: headers })
+    return this.http.get(this.env.API_URL + 'auth/logout', { headers })
     .pipe(
       tap(data => {
-        this.storage.remove("token");
+        this.storage.remove('token');
         this.isLoggedIn = false;
         delete this.token;
         return data;
       })
-    )
+    );
   }
 
   user() {
     const headers = new HttpHeaders({
-      'Authorization': this.token["token_type"]+" "+this.token["access_token"]
+      Authorization: this.token.token_type + ' ' + this.token.access_token
     });
 
-    return this.http.get<User>(this.env.API_URL + 'auth/user', { headers: headers })
+    return this.http.get<User>(this.env.API_URL + 'auth/user', { headers })
     .pipe(
       tap(user => {
         return user;
@@ -86,7 +88,7 @@ export class AuthService {
       },
       error => {
         this.token = null;
-        this.isLoggedIn=false;
+        this.isLoggedIn = false;
       }
     );
   }

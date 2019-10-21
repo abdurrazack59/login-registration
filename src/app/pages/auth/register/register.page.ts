@@ -11,9 +11,9 @@ import { AlertService } from 'src/app/services/alert.service';
 })
 export class RegisterPage implements OnInit {
   constructor(private modalController: ModalController,
-    private authService: AuthService,
-    private navCtrl: NavController,
-    private alertService: AlertService
+              private authService: AuthService,
+              private navCtrl: NavController,
+              private alertService: AlertService
   ) { }
   ngOnInit() {
   }
@@ -33,7 +33,7 @@ export class RegisterPage implements OnInit {
     this.authService.register(form.value.fName, form.value.lName, form.value.email, form.value.password).subscribe(
       data => {
         this.authService.login(form.value.email, form.value.password).subscribe(
-          data => {
+          () => {
           },
           error => {
             console.log(error);
@@ -43,13 +43,13 @@ export class RegisterPage implements OnInit {
             this.navCtrl.navigateRoot('/dashboard');
           }
         );
-        this.alertService.presentToast(data['message']);
+        this.alertService.presentToast(data.message);
       },
       error => {
         console.log(error);
       },
       () => {
-        
+
       }
     );
   }

@@ -7,18 +7,16 @@ import { AlertService } from 'src/app/services/alert.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  styleUrls: ['./login.page.scss']
 })
 export class LoginPage implements OnInit {
-  
   constructor(
     private modalController: ModalController,
     private authService: AuthService,
     private navCtrl: NavController,
     private alertService: AlertService
-  ) { }
-  ngOnInit() {
-  }
+  ) {}
+  ngOnInit() {}
   // Dismiss Login Modal
   dismissLogin() {
     this.modalController.dismiss();
